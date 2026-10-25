@@ -8,10 +8,13 @@ export const connectDB = async () => {
   try {
     console.log(`[Database] Attempting connection to MongoDB at: ${uri.replace(/\/\/[^@]*@/, '//***:***@')}`);
     
-    // Connect with a 2000ms serverSelectionTimeoutMS so we fail fast to memory server if local mongod service isn't running
+    // For remote/Atlas connections, allow up to 15 seconds for DNS resolution and TLS handshake; local connections fail fast (2.5s) to memory server
+    const isRemote = uri.includes('mongodb+srv://') || (!uri.includes('127.0.0.1') && !uri.includes('localhost'));
+    const timeoutMS = isRemote ? 15000 : 2500;
+
     const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 2000,
-      connectTimeoutMS: 2000,
+      serverSelectionTimeoutMS: timeoutMS,
+      connectTimeoutMS: timeoutMS,
     });
     
     console.log(`[Database] MongoDB Connected successfully: ${conn.connection.host}/${conn.connection.name}`);
