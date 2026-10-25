@@ -1,0 +1,34 @@
+{
+  "name": "fleetflow-enterprise-fleet-management",
+  "version": "1.0.0",
+  "description": "Enterprise Fleet Management System built with MERN stack, Redis caching, and Docker",
+  "scripts": {
+    "dev": "concurrently -n \"backend,frontend\" -c \"blue,green\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "seed": "npm --prefix backend run seed",
+    "test": "npm --prefix backend test",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
+  },
+  "keywords": [
+    "fleet-management",
+    "mern",
+    "mongodb",
+    "express",
+    "react",
+    "nodejs",
+    "redis",
+    "docker"
+  ],
+  "author": "FleetFlow Engineering Team",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "mongoose": "^9.10.3"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
